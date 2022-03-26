@@ -365,7 +365,7 @@ def TrackImages():
     df=pd.read_csv("StudentDetails\StudentDetails.csv")
     cam = cv2.VideoCapture(0)
     font = cv2.FONT_HERSHEY_SIMPLEX        
-    col_names =  ['Id','Name','Date','Time']
+    col_names =  ['Id','Name','Date','Time','Emotion']
     co=['name']
     attendance = pd.DataFrame(columns = col_names)
     namess=""
@@ -377,6 +377,9 @@ def TrackImages():
 
     
     attendance1 = pd.DataFrame(columns = co)
+    EmotionCounter = {}
+    studentSet = set()
+
     while True:
         ret, im =cam.read()
         gray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
@@ -402,6 +405,18 @@ def TrackImages():
             Id, conf = recognizer.predict(gray[fY:fY+fH,fX:fX+fW])
             print("id==",Id)
             print("conf==",conf)
+            print("emotion==",label)
+
+            name = Id
+            emotion = label
+            if name in studentSet:
+                emotionCount = EmotionCounter[name]
+                emotionCount[emotion] = emotionCount[emotion] + 1;
+            else:
+                studentSet.add(name)
+                EmotionCounter[name] = {"angry":0 ,"disgust":0,"scared":0, "happy":0, "sad":0, "surprised":0, "neutral":0} 
+                emotionCount = EmotionCounter[name]
+                emotionCount[emotion] = emotionCount[emotion] + 1;
 
      
         for (i, (emotion, prob)) in enumerate(zip(EMOTIONS, preds)):
@@ -430,7 +445,10 @@ def TrackImages():
             aaa=''.join(e for e in aa if e.isalnum())
             #print aaa
             tt=str(Id)+"-"+aa
-            attendance.loc[len(attendance)] = [Id,aa,date,timeStamp]
+            emotionCount = EmotionCounter[name]
+            emotionMax = max(zip(emotionCount.values(),emotionCount.keys()))[1]
+            # print(emotionMax)
+            attendance.loc[len(attendance)] = [Id,aa,date,timeStamp,emotionMax]
             attendance1.loc[len(attendance)] = [aa]
             
             namess=namess.replace(aaa, " ")
@@ -525,11 +543,5 @@ Attendance = tk.Button(window, text="Calculate", command=calculate  ,fg="red"  ,
 Attendance.place(x=200, y=500)
 quitWindow = tk.Button(window, text="Quit", command=window.destroy  ,fg="red"  ,bg="yellow"  ,width=20  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
 quitWindow.place(x=1100, y=500)
-copyWrite = tk.Text(window, background=window.cget("background"), borderwidth=0,font=('times', 30, 'italic bold underline'))
-copyWrite.tag_configure("superscript", offset=10)
-copyWrite.insert("insert", "Developed by Mindsoft","", "TEAM", "superscript")
-copyWrite.configure(state="disabled",fg="red"  )
-copyWrite.pack(side="left")
-copyWrite.place(x=800, y=750)
  
 window.mainloop()

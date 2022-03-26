@@ -1,0 +1,5 @@
+1. open Anaconda Prompt
+2. D:
+3. cd D:\Amulu\Final Project\Face Recognition
+4. activate tensorflow
+5. python Runfile.py
