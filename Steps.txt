@@ -3,3 +3,10 @@
 3. cd D:\Amulu\Final Project\Face Recognition
 4. activate tensorflow
 5. python Runfile.py
+
+Copy paste this:
+
+D:
+cd D:\Amulu\Final Project\Face Recognition
+activate tensorflow
+python Runfile.py
