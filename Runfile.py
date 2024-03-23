@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import*
 from tkinter import Message ,Text
 import cv2,os
 import shutil
@@ -9,7 +10,7 @@ import pandas as pd
 #import datetime
 import time
 from datetime import datetime
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.utils import img_to_array
 import imutils
 import cv2
 from keras.models import load_model
@@ -47,21 +48,20 @@ window.configure(background='white')
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
 
-message = tk.Label(window, text="Face Recognition Based Attendance System With Emotion Detection" ,bg="green"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'bold')) 
+message3 = tk.Label(window, text="Face Recognition Based Attendance System With Emotion Detection" ,bg="green"  ,fg="white"  ,width=50  ,height=3,font=('times', 30, 'bold')) 
+message3.place(x=200, y=20)
 
-message.place(x=200, y=20)
+lbl = tk.Label(window, text="Enter ID",width=15  ,height=2  ,fg="blue"  ,bg="snow" ,font=('times', 20, ' bold ') ) 
+# lbl.place(x=400, y=200)
 
-lbl = tk.Label(window, text="Enter ID",width=15  ,height=2  ,fg="green"  ,bg="snow" ,font=('times', 20, ' bold ') ) 
-lbl.place(x=400, y=200)
+txt = tk.Entry(window,width=20  ,bg="whitesmoke" ,fg="black",font=('times', 18, ' bold '))
+# txt.place(x=700, y=215)
 
-txt = tk.Entry(window,width=15  ,bg="whitesmoke" ,fg="black",font=('times', 18, ' bold '))
-txt.place(x=700, y=215)
+lbl2 = tk.Label(window, text="Enter Name",width=15  ,fg="blue"  ,bg="snow"    ,height=2 ,font=('times', 20, ' bold ')) 
+# lbl2.place(x=400, y=300)
 
-lbl2 = tk.Label(window, text="Enter Name",width=15  ,fg="green"  ,bg="snow"    ,height=2 ,font=('times', 20, ' bold ')) 
-lbl2.place(x=400, y=300)
-
-txt2 = tk.Entry(window,width=20  ,bg="whitesmoke"  ,fg="black",font=('times', 18, ' bold ')  )
-txt2.place(x=700, y=315)
+txt2 = tk.Entry(window,width=20  ,bg="whitesmoke"  ,fg="black",font=('times', 18, ' bold '))
+# txt2.place(x=700, y=315)
 
 lbl3 = tk.Label(window, text="Notification : ",width=15  ,fg="green"  ,bg="snow"  ,height=2 ,font=('times', 20, ' bold underline ')) 
 lbl3.place(x=400, y=400)
@@ -69,12 +69,12 @@ lbl3.place(x=400, y=400)
 message = tk.Label(window, text="" ,bg="whitesmoke"  ,fg="red"  ,width=30  ,height=2, activebackground = "yellow" ,font=('times', 15, ' bold ')) 
 message.place(x=700, y=400)
 
-lbl3 = tk.Label(window, text="Attendance : ",width=15  ,fg="red"  ,bg="snow"  ,height=2 ,font=('times', 20, ' bold  underline')) 
-lbl3.place(x=400, y=650)
+lbl4 = tk.Label(window, text="Attendance : ",width=15  ,fg="red"  ,bg="snow"  ,height=2 ,font=('times', 20, ' bold  underline')) 
+lbl4.place(x=350, y=650)
 
 
 message2 = tk.Label(window, text="" ,fg="red"   ,bg="whitesmoke",activeforeground = "green",width=40  ,height=12  ,font=('times', 15, ' bold ')) 
-message2.place(x=700, y=650)
+message2.place(x=630, y=650)
  
 def clear():
     txt.delete(0, 'end')    
@@ -352,11 +352,6 @@ def calculate():
                 for item in abslist:
                     f.write("%s\n" % item)
             
-                
-    
-                
-                
-            
   
 def TrackImages():
     recognizer = cv2.face.LBPHFaceRecognizer_create()#cv2.createLBPHFaceRecognizer()
@@ -527,21 +522,76 @@ def TrackImages():
 ##    res=attendance
 ##    message2.configure(text= res)
 
-clearButton = tk.Button(window, text="Clear", command=clear  ,fg="green"  ,bg="gainsboro"  ,width=15  ,height=2 ,activebackground = "Red" ,font=('times', 20, ' bold '))
-clearButton.place(x=950, y=200)
-clearButton2 = tk.Button(window, text="Clear", command=clear2  ,fg="green"  ,bg="gainsboro"  ,width=15  ,height=2, activebackground = "Red" ,font=('times', 20, ' bold '))
-clearButton2.place(x=950, y=300)    
-retakeImg = tk.Button(window, text="Retrain", command=TakeImages1  ,fg="red"  ,bg="yellow"  ,width=10  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-retakeImg.place(x=200, y=500)
-Attendance = tk.Button(window, text="Calculate", command=calculate  ,fg="red"  ,bg="yellow"  ,width=10  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-Attendance.place(x=350, y=500)
-takeImg = tk.Button(window, text="Take Images", command=TakeImages  ,fg="red"  ,bg="yellow"  ,width=10  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-takeImg.place(x=500, y=500)
-trainImg = tk.Button(window, text="Train Images", command=TrainImages  ,fg="red"  ,bg="yellow"  ,width=10  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-trainImg.place(x=650, y=500)
-trackImg = tk.Button(window, text="Track Images", command=TrackImages  ,fg="red"  ,bg="yellow"  ,width=10  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-trackImg.place(x=800, y=500)
-quitWindow = tk.Button(window, text="Quit", command=window.destroy  ,fg="red"  ,bg="yellow"  ,width=20  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-quitWindow.place(x=950, y=500)
+def Register_show():
+    lbl.place(x=400, y=230) #enter_id
+    txt.place(x=700, y=250) #id_text_box
+
+    lbl2.place(x=400, y=330) #enter_name
+    txt2.place(x=700, y=350) #name_text_box
+
+    lbl3.place(x=400, y=500) #notification
+    message.place(x=700, y=500) #notification_textbox
+
+    clearButton.place(x=970, y=230) 
+    clearButton2.place(x=970, y=330)
+    retakeImg.place(x=400, y=670)
+    takeImg.place(x=630, y=670)
+    back.place(x=850, y=670)
+
+    trainImg.place(x=100000, y=10000)
+    
+    register.place(x=100000, y=10000)
+
+    quitWindow.place(x=100000, y=10000)
+    trackImg.place(x=100000, y=10000)
+    # Attendance.place(x=100000, y=10000)
+    lbl4.place(x=100000, y=10000)
+    message2.place(x=100000, y=10000)
+    
+
+
+def Register_hide():
+    lbl.place(x=100000, y=10000) #enter_id
+    txt.place(x=100000, y=10000) #id_text_box
+    lbl2.place(x=100000, y=10000) #enter_name
+    txt2.place(x=100000, y=10000) #name_text_box
+    lbl3.place(x=400, y=400) #notification
+    message.place(x=700, y=400) #notification_textbox
+    
+    clearButton.place(x=100000, y=10000)
+    clearButton2.place(x=100000, y=10000)
+    retakeImg.place(x=100000, y=10000)
+    takeImg.place(x=100000, y=10000)
+    trainImg.place(x=400, y=500)
+    back.place(x=100000, y=10000)
+    register.place(x=580, y=200)
+
+    quitWindow.place(x=840, y=500)
+    trackImg.place(x=620, y=500)
+    # Attendance.place(x=350, y=500)
+    lbl4.place(x=350, y=650)
+    message2.place(x=630, y=650)
+
+register= tk.Button(window, text= "Register for new user", command= Register_show ,fg="blue"  ,bg="gainsboro"  ,width=20  ,height=2 ,activebackground = "Red" ,font=('times', 20, ' bold '))
+register.place(x=580, y=200)
+back= tk.Button(window, text= "Back", command= Register_hide ,fg="white"  ,bg="red"  ,width=15  ,height=2 ,activebackground = "yellow" ,font=('times', 20, ' bold '))
+
+clearButton = tk.Button(window, text="Clear", command=clear  ,fg="green"  ,bg="lavender"  ,width=10  ,height=2 ,activebackground = "Red" ,font=('times', 15, ' bold '))
+# clearButton.place(x=950, y=200)
+clearButton2 = tk.Button(window, text="Clear", command=clear2  ,fg="green"  ,bg="lavender"  ,width=10  ,height=2, activebackground = "Red" ,font=('times', 15, ' bold '))
+# clearButton2.place(x=950, y=300)    
+retakeImg = tk.Button(window, text="Retrain", command=TakeImages1  ,fg="green"  ,bg="gainsboro"  ,width=12  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
+
+# Attendance = tk.Button(window, text="Calculate", command=calculate  ,fg="red"  ,bg="yellow"  ,width=10  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
+# Attendance.place(x=350, y=500)
+
+takeImg = tk.Button(window, text="Take Images", command=TakeImages  ,fg="green"  ,bg="gainsboro"  ,width=12  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
+
+trainImg = tk.Button(window, text="Train Images", command=TrainImages  ,fg="green"  ,bg="gainsboro"  ,width=12  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
+trainImg.place(x=400, y=500)
+trackImg = tk.Button(window, text="Track Images", command=TrackImages  ,fg="green"  ,bg="gainsboro"  ,width=12  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
+trackImg.place(x=620, y=500)
+quitWindow = tk.Button(window, text="Quit", command=window.destroy  ,fg="white"  ,bg="red"  ,width=20  ,height=3, activebackground = "yellow" ,font=('times', 15, ' bold '))
+quitWindow.place(x=840, y=500)
  
 window.mainloop()
